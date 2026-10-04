@@ -1,0 +1,58 @@
+erDiagram
+    User ||--o{ Post : "author / CASCADE"
+    User ||--o{ Comment : "author / CASCADE"
+    Category |o--o{ Post : "category / SET_NULL"
+    Post ||--o{ Comment : "post / CASCADE"
+    Post ||--o{ PostTags : "CASCADE"
+    Tag ||--o{ PostTags : "CASCADE"
+
+    User {
+        bigint id PK
+        varchar email UK "EmailField; login"
+        varchar first_name "50; required"
+        varchar last_name "50; required"
+        boolean is_active "default True"
+        boolean is_staff "default False"
+        varchar password "inherited; hashed"
+        datetime last_login "inherited; nullable"
+        boolean is_superuser "inherited; default False"
+    }
+    Category {
+        bigint id PK
+        varchar name UK "100"
+        varchar slug UK "SlugField"
+    }
+    Tag {
+        bigint id PK
+        varchar name UK "50"
+        varchar slug UK "SlugField"
+    }
+    Post {
+        bigint id PK
+        bigint author_id FK
+        varchar title "200"
+        varchar slug UK "SlugField"
+        text body
+        bigint category_id FK "nullable"
+        varchar status "TextChoices: draft, published"
+        datetime created_at "auto_now_add"
+        datetime updated_at "auto_now"
+    }
+    Comment {
+        bigint id PK
+        bigint post_id FK
+        bigint author_id FK
+        text body
+        datetime created_at "auto_now_add"
+    }
+    PostTags {
+        bigint id PK
+        bigint post_id FK "unique together with tag_id"
+        bigint tag_id FK "unique together with post_id"
+    }
+
+%% PostTags is Django's automatic blog_post_tags table, not a separate model.
+%% Post.tags is optional (blank=True): a post can have zero or more tags.
+%% User extends AbstractBaseUser and PermissionsMixin.
+%% PermissionsMixin also supplies groups and user_permissions relations;
+%% standard Django auth tables are omitted to keep the homework ERD readable.

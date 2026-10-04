@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="950" viewBox="0 0 1600 950" role="img" aria-labelledby="title description">
+  <title id="title">Blog API — Homework 1 ERD</title>
+  <desc id="description">User authors posts and comments. A post optionally belongs to one category, has comments, and has many tags through Django's automatic join table. Foreign-key deletion rules and relationship cardinalities are shown.</desc>
+  <style>
+    .box{fill:white;stroke:#344054;stroke-width:2}
+    .head{fill:#eaf0f5;stroke:#344054;stroke-width:2}
+    .name{font:700 20px Arial,sans-serif;fill:#182230}
+    .field{font:16px Consolas,monospace;fill:#182230}
+    .label{font:16px Arial,sans-serif;fill:#344054}
+    .note{font:17px Arial,sans-serif;fill:#475467}
+    .line{fill:none;stroke:#667085;stroke-width:2}
+  </style>
+  <rect width="1600" height="950" fill="#ffffff"/>
+  <text x="40" y="45" class="name" style="font-size:26px">Blog API — Homework 1</text>
+  <text x="40" y="75" class="note">PK = primary key · FK = foreign key · UK = unique · 0..* = zero or more</text>
+
+  <g transform="translate(40 110)">
+    <rect width="390" height="310" rx="3" class="box"/>
+    <path d="M0 42H390V0H0Z" class="head"/>
+    <text x="16" y="28" class="name">User (auths.User)</text>
+    <text x="16" y="69" class="field">id: BigAutoField [PK]</text>
+    <text x="16" y="95" class="field">email: EmailField [UK, login]</text>
+    <text x="16" y="121" class="field">first_name: Char(50), required</text>
+    <text x="16" y="147" class="field">last_name: Char(50), required</text>
+    <text x="16" y="173" class="field">is_active: Bool = True</text>
+    <text x="16" y="199" class="field">is_staff: Bool = False</text>
+    <text x="16" y="225" class="field">password: Char, hashed *</text>
+    <text x="16" y="251" class="field">last_login: DateTime, nullable *</text>
+    <text x="16" y="277" class="field">is_superuser: Bool = False *</text>
+  </g>
+
+  <g transform="translate(640 110)">
+    <rect width="450" height="310" rx="3" class="box"/>
+    <path d="M0 42H450V0H0Z" class="head"/>
+    <text x="16" y="28" class="name">Post</text>
+    <text x="16" y="69" class="field">id: BigAutoField [PK]</text>
+    <text x="16" y="95" class="field">author_id: FK → User</text>
+    <text x="16" y="121" class="field">title: Char(200)</text>
+    <text x="16" y="147" class="field">slug: SlugField [UK]</text>
+    <text x="16" y="173" class="field">body: Text</text>
+    <text x="16" y="199" class="field">category_id: FK → Category, nullable</text>
+    <text x="16" y="225" class="field">status: draft | published (TextChoices)</text>
+    <text x="16" y="251" class="field">created_at: DateTime, auto_now_add</text>
+    <text x="16" y="277" class="field">updated_at: DateTime, auto_now</text>
+  </g>
+
+  <g transform="translate(1300 110)">
+    <rect width="260" height="150" rx="3" class="box"/>
+    <path d="M0 42H260V0H0Z" class="head"/>
+    <text x="16" y="28" class="name">Category</text>
+    <text x="16" y="69" class="field">id: BigAutoField [PK]</text>
+    <text x="16" y="95" class="field">name: Char(100) [UK]</text>
+    <text x="16" y="121" class="field">slug: SlugField [UK]</text>
+  </g>
+
+  <g transform="translate(40 620)">
+    <rect width="430" height="204" rx="3" class="box"/>
+    <path d="M0 42H430V0H0Z" class="head"/>
+    <text x="16" y="28" class="name">Comment</text>
+    <text x="16" y="69" class="field">id: BigAutoField [PK]</text>
+    <text x="16" y="95" class="field">post_id: FK → Post</text>
+    <text x="16" y="121" class="field">author_id: FK → User</text>
+    <text x="16" y="147" class="field">body: Text</text>
+    <text x="16" y="173" class="field">created_at: DateTime, auto_now_add</text>
+  </g>
+
+  <g transform="translate(640 620)">
+    <rect width="360" height="177" rx="3" class="box"/>
+    <path d="M0 42H360V0H0Z" class="head"/>
+    <text x="16" y="28" class="name">Post_tags (automatic)</text>
+    <text x="16" y="69" class="field">id: BigAutoField [PK]</text>
+    <text x="16" y="95" class="field">post_id: FK → Post</text>
+    <text x="16" y="121" class="field">tag_id: FK → Tag</text>
+    <text x="16" y="151" class="label">Unique pair: (post_id, tag_id)</text>
+  </g>
+
+  <g transform="translate(1300 620)">
+    <rect width="260" height="150" rx="3" class="box"/>
+    <path d="M0 42H260V0H0Z" class="head"/>
+    <text x="16" y="28" class="name">Tag</text>
+    <text x="16" y="69" class="field">id: BigAutoField [PK]</text>
+    <text x="16" y="95" class="field">name: Char(50) [UK]</text>
+    <text x="16" y="121" class="field">slug: SlugField [UK]</text>
+  </g>
+
+  <path d="M430 210H640" class="line"/>
+  <text x="442" y="198" class="label">1</text><text x="597" y="198" class="label">0..*</text>
+  <text x="500" y="192" class="label">author</text><text x="485" y="236" class="label">CASCADE</text>
+
+  <path d="M1090 205H1300" class="line"/>
+  <text x="1102" y="193" class="label">0..*</text><text x="1260" y="193" class="label">0..1</text>
+  <text x="1160" y="179" class="label">category</text><text x="1150" y="231" class="label">SET_NULL</text>
+
+  <path d="M230 420V620" class="line"/>
+  <text x="242" y="445" class="label">1</text><text x="242" y="607" class="label">0..*</text>
+  <text x="244" y="510" class="label">author</text><text x="244" y="535" class="label">CASCADE</text>
+
+  <path d="M640 360H540V710H470" class="line"/>
+  <text x="613" y="348" class="label">1</text><text x="480" y="697" class="label">0..*</text>
+  <text x="552" y="495" class="label">post</text><text x="552" y="520" class="label">CASCADE</text>
+
+  <path d="M820 420V620" class="line"/>
+  <text x="832" y="445" class="label">1</text><text x="832" y="607" class="label">0..*</text>
+  <text x="834" y="510" class="label">CASCADE</text>
+  <text x="834" y="535" class="label">Post.tags: optional M:N</text>
+
+  <path d="M1000 710H1300" class="line"/>
+  <text x="1012" y="698" class="label">0..*</text><text x="1278" y="698" class="label">1</text>
+  <text x="1110" y="698" class="label">CASCADE</text>
+
+  <text x="40" y="870" class="note">* User inherits password and last_login from AbstractBaseUser, and is_superuser from PermissionsMixin.</text>
+  <text x="40" y="897" class="note">PermissionsMixin also adds groups and user_permissions. Standard Django auth tables are omitted here.</text>
+  <text x="40" y="924" class="note">Django creates all id fields and the blog_post_tags join table. A post may have no category and no tags.</text>
+</svg>
