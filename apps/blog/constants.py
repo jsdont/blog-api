@@ -1,0 +1,8 @@
+CATEGORY_NAME_MAX_LENGTH = 100
+TAG_NAME_MAX_LENGTH = 50
+POST_TITLE_MAX_LENGTH = 200
+SLUG_MAX_LENGTH = 50
+POST_STATUS_MAX_LENGTH = 9
+
+PUBLISHED_POST_REQUIRED = "Comments are allowed only on published posts."
+COMMENT_POST_CANNOT_CHANGE = "You cannot move a comment to another post."
