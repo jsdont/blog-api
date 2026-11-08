@@ -184,3 +184,32 @@ JWT, связи моделей и доступ к записям. Лимиты �
 Документация: [Django: custom user](https://docs.djangoproject.com/en/5.2/topics/auth/customizing/),
 [DRF: viewsets](https://www.django-rest-framework.org/api-guide/viewsets/),
 [SimpleJWT](https://django-rest-framework-simplejwt.readthedocs.io/en/stable/getting_started.html).
+
+
+
+## Seeding
+
+Run `python manage.py seed` after `python manage.py migrate`.
+Options: `--users` (20), `--posts` (100), `--comments` (500), `--clear` (off).
+`--clear` deletes blog data and non-superusers; superusers are preserved.
+Repeated runs are supported. Seed password: `BlogSeed2026!` (stored hashed).
+Example: `python manage.py seed --users 50 --posts 300 --comments 1500`.
+
+## Admin
+
+Open http://127.0.0.1:8000/admin/ and log in as a superuser.
+Unfold: filters, actions, autocomplete, WYSIWYG, dashboard and paginated comments.
+
+![Dashboard](docs/screenshots/dashboard.png)
+![Post filters](docs/screenshots/post-list.png)
+![Post edit](docs/screenshots/post-edit.png)
+![Users](docs/screenshots/user-list.png)
+
+From an empty configured database:
+
+```cmd
+python manage.py migrate
+python manage.py seed
+python manage.py createsuperuser
+python manage.py runserver
+```

@@ -1,0 +1,28 @@
+{% extends "admin/base_site.html" %}
+{% load unfold %}
+{% block content %}
+<style>
+    .dashboard { display: grid; gap: 20px; }
+    .cards { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); }
+    .category-chart > div { height: 300px; }
+</style>
+<div class="dashboard">
+    <div class="cards">
+        {% for title, value in cards %}
+            {% component "unfold/components/card.html" with title=title %}
+                <strong>{{ value }}</strong>
+            {% endcomponent %}
+        {% endfor %}
+    </div>
+    <h2>Posts per category</h2>
+    <div class="category-chart">
+        {% include "unfold/components/chart/bar.html" with data=chart options=chart_options %}
+    </div>
+    <h2>Top 5 authors</h2>
+    {% include "unfold/components/table.html" with table=table only %}
+    <h2>Post status</h2>
+    {% for bar in progress %}
+        {% include "unfold/components/progress.html" with title=bar.title value=bar.value description=bar.description %}
+    {% endfor %}
+</div>
+{% endblock %}

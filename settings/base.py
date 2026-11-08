@@ -1,6 +1,9 @@
 from settings.conf import ALLOWED_HOSTS, BASE_DIR, SECRET_KEY  # noqa: F401
 
 INSTALLED_APPS = [
+    "unfold",
+    "unfold.contrib.filters",
+    "unfold.contrib.forms",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -30,7 +33,7 @@ AUTH_USER_MODEL = "auths.User"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -83,4 +86,36 @@ LOGGING = {
         },
     },
     "root": {"handlers": ["console", "file"], "level": "INFO"},
+}
+
+
+UNFOLD = {
+    "SITE_TITLE": "Blog API",
+    "SITE_HEADER": "Blog API",
+    "SITE_SUBHEADER": "Content administration",
+    "SITE_SYMBOL": "edit_note",
+    "COLORS": {
+        "primary": {
+            "50": "#eff6ff",
+            "100": "#dbeafe",
+            "200": "#bfdbfe",
+            "300": "#93c5fd",
+            "400": "#60a5fa",
+            "500": "#3b82f6",
+            "600": "#2563eb",
+            "700": "#1d4ed8",
+            "800": "#1e40af",
+            "900": "#1e3a8a",
+            "950": "#172554",
+        }
+    },
+    "ENVIRONMENT": "apps.blog.callbacks.environment",
+    "SITE_DROPDOWN": [
+        {"title": "GitHub", "link": "https://github.com/jsdont/blog-api"},
+        {"title": "Unfold docs", "link": "https://unfoldadmin.com/docs/"},
+    ],
+    "COMMAND": {"search_models": True},
+    "SIDEBAR": {"navigation": "apps.blog.callbacks.navigation"},
+    "TABS": "apps.blog.callbacks.tabs",
+    "DASHBOARD_CALLBACK": "apps.blog.callbacks.dashboard",
 }
