@@ -1,10 +1,12 @@
-from django.contrib.auth.forms import UserChangeForm as DjangoUserChangeForm
-from django.contrib.auth.forms import UserCreationForm as DjangoUserCreationForm
+from unfold.forms import UserChangeForm as DjangoUserChangeForm
+from unfold.forms import UserCreationForm as DjangoUserCreationForm
 
 from apps.auths.models import User
 
 
 class UserCreationForm(DjangoUserCreationForm):
+    usable_password = None
+
     class Meta(DjangoUserCreationForm.Meta):
         model = User
         fields = ("email", "first_name", "last_name")
