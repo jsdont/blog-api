@@ -213,3 +213,39 @@ python manage.py seed
 python manage.py createsuperuser
 python manage.py runserver
 ```
+
+
+## Queries (Homework 3)
+
+The seed command spreads post dates across the last 365 days. About 30% of
+posts are edited 1-30 days later, never in the future. Comments are dated
+between their post's creation and the time the seed command runs.
+
+```cmd
+python manage.py migrate
+python manage.py seed
+python manage.py queries
+python manage.py queries --number 31
+python manage.py queries --number 6 --sql
+```
+
+Each result shows its number, function name and SQL query count. Lists display
+the first five rows and the total row count; annotated models also show their
+computed values. Sample arguments are selected before SQL measurement.
+
+Example (exact data depends on the seed):
+
+```text
+#6 has_drafts - 1 SQL query
+  True
+```
+
+Queries 40-44 change data and are excluded from the default run. Run one
+explicitly, for example:
+
+```cmd
+python manage.py queries --number 41
+```
+
+To restore the generated dataset, use `python manage.py seed --clear`.
+This removes existing blog data and non-superuser accounts before seeding.
